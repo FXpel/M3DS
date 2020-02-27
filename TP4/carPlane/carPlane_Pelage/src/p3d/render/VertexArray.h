@@ -84,7 +84,7 @@ public:
   virtual ~ArrayBuffer();
   ArrayBuffer(const ArrayBuffer &src)=delete;
   ArrayBuffer &operator=(const ArrayBuffer &src)=delete;
-  ArrayBuffer(const std::vector<GLfloat> &data,GLenum target=GL_ARRAY_BUFFER,uint nbComponent=1);
+  ArrayBuffer(const std::vector<GLfloat> &data,GLenum target=GL_ARRAY_BUFFER,GLuint nbComponent=1);
   ArrayBuffer(const std::vector<GLuint> &data,GLenum target=GL_ELEMENT_ARRAY_BUFFER);
   ArrayBuffer(const std::vector<Vector4> &data, GLenum target);
   ArrayBuffer(const std::vector<Vector3> &data, GLenum target);
