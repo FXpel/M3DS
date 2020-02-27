@@ -182,17 +182,23 @@ void GLApplication::updateCamera() {
       }
       break;
     case Camera_Follow_Car: {
-
+      cameraStop_.position(car_.position()+ car_.orientation() * Vector3(15,4,3));
+            cameraStop_.orientation(car_.orientation());
+            cameraStop_.rotate(90,0,1,0);
       }
       break;
     case Camera_Follow_Plane: {
 
-        camera_.position(airplane_.position()+Vector3(0,1,-3));
-        camera_.orientation(180,Vector3(0,1,0));
-
+//        camera_.position(airplane_.position()+Vector3(0,1,-3));
+//        camera_.orientation(180,Vector3(0,1,0));
+        cameraStop_.position(airplane_.position()+ airplane_.orientation() * Vector3(0,1,-3));
+         cameraStop_.orientation(airplane_.orientation());
+        cameraStop_.rotate(180,Vector3(0,1,0));
       }
       break;
   }
+  camera_.position(cameraStart_.position() * ( 1 - lambda_) + cameraStop_.position() * lambda_);
+    camera_.orientation(cameraStart_.orientation() * (1 - lambda_) + cameraStop_.orientation() * lambda_);
 }
 
 

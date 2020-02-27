@@ -163,7 +163,7 @@ void Car::move() {
   orientation_.rotate(steering_*velocity_/(1.0+fabs(velocity_)),Vector3(0,1,0)); // le /(1.0+fabs(_velocity)) a été déterminé empiriquement
   Vector3 uneDirection = *new Vector3(-1, 0, 0); // on avance sur l'axe x
   uneDirection = orientation_ * uneDirection; // orientation influe sur la direction de la voiture
-      uneDirection = uneDirection * velocity_ * 0.3; // vitesse de la voiture
+      uneDirection = uneDirection * velocity_ * 0.5; // vitesse de la voiture
       position_ += uneDirection; // déplacement de la voiture
 }
 
