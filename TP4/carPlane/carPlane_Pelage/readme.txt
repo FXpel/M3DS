@@ -1,6 +1,7 @@
 Pelage François-Xavier
 
-Doit contenir :
-- ce que vous n'avez pas fait (et pourquoi). Précisez explicitement "tout a été fait et fonctionne parfaitement" si c'est le cas.
-- difficultés rencontrées.
-- commentaires éventuels sur le TP (points à éclaircir, longueur du sujet, etc). 
+
+tout a été fait et fonctionne.
+difficultés rencontré:
+	-lors de la création des roues
+	-à comprendre comment bien déplacer la caméra
