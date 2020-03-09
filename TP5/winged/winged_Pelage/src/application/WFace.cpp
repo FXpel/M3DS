@@ -48,6 +48,8 @@ void WFace::draw(bool withNormal) {
           e_new = e ->succRight();
       }
       position.push_back(v->position());
+      v->computeNormal();
+      normal.push_back(v->normal());
       e=e_new;
   } while (e != start);
 

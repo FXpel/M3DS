@@ -36,9 +36,25 @@ using namespace std;
 
 void WVertex::computeNormal() {
   Vector3 average(0,0,0); // à calculer
-
+  WEdge *e, *e_new, *start;
+  e = start = this->edge();
+  WFace *f;
+  float cpt =0;
+  do {
+      if(this == e->end()){
+           f = e->right();
+          e_new = e ->predRight();
+      }
+      else{
+          f = e->left();
+         e_new = e ->predLeft();
+      }
+      cpt++;
+      average += f->normal();
+      e=e_new;
+  } while (e != start);
   // TODO : compléter
-
+   average = average/cpt;
 
 
   // A LAISSER à la fin
