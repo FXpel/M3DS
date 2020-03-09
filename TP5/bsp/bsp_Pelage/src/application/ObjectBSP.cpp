@@ -32,13 +32,13 @@ NodeBSP *ObjectBSP::consTree(const std::vector<FaceBSP> &face) {
   /// Il s'agit de prendre un pivot dans le paramètre face, et de séparer l'ensemble des autres faces dans des tableaux negative et positive.
   /// puis on récursive sur negative et positive
   /// Les setters du NodeBSP res sont res->face(une_face), res->negative(un_arbre), res->positive(un_arbre)
-
   NodeBSP *res=nullptr;
   vector<FaceBSP> negative,positive;
   negative.clear();
   positive.clear();
 
   if (face.empty()) {
+
     return nullptr;
   } else {
     res=new NodeBSP();
@@ -51,13 +51,24 @@ NodeBSP *ObjectBSP::consTree(const std::vector<FaceBSP> &face) {
 
         pivot.separe(face[i],fPositive,fNegative);
 
-        negative.push_back(fNegative);
-        positive.push_back(fPositive);
+
+        if(fNegative.size() != 0){
+            negative.push_back(fNegative);
+        }
+
+        if(fPositive.size() != 0){
+            positive.push_back(fPositive);
+        }
+
+
+
+
 
     }
     // à laisser à la fin : appels récursifs
     res->negative(consTree(negative));
     res->positive(consTree(positive));
+
     return res;
   }
 }
@@ -73,22 +84,21 @@ void ObjectBSP::drawBSP(NodeBSP *tree,const Vector3 &eye) {
   /// pour ajouter le tracé d'une face de type FaceBSP, il sufft de faire addDraw(face)
 
   // TODO : à compléter
-    if(tree != nullptr) {
-            switch(tree->face().sign(eye)) {
-            case Sign_Minus:
-                drawBSP(tree->positive(), eye);
-                addDraw(tree->face());
-                drawBSP(tree->negative(), eye);
-                break;
-            case Sign_Plus:
-                drawBSP(tree->negative(), eye);
-                addDraw(tree->face());
-                drawBSP(tree->positive(), eye);
-                break;
-            default:
-                break;
-            }
+    if(tree->nbFace() > 0) {
+        if(tree->face().sign(eye) == Sign_Minus){
+            addDraw(tree->positive());
+            addDraw(tree->face());
+            addDraw(tree -> negative());
+
         }
+        else{
+            addDraw(tree->negative());
+            addDraw(tree->face());
+            addDraw(tree -> positive());
+        }
+
+        }
+
 
 }
 

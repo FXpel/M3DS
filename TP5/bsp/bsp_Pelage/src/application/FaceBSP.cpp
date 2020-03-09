@@ -53,14 +53,46 @@ VertexBSP FaceBSP::intersection(const VertexBSP &v1,const VertexBSP &v2) const {
   VertexBSP res;
   Vector3 V1V2 = v1.position() - v2.position();
   Vector3 A = position(0);
-  float k = (dot(A,normal()) - dot(v1.position(),normal()))/ dot(V1V2,normal());
+  double k = (dot(A,normal()) - dot(v1.position(),normal()))/ dot(V1V2,normal());
   Vector3 I =v1.position()+k*V1V2;
-
+  if(0.01>=dot(V1V2,normal()) <= -0.01){
+      I = v1.position();
+  }
   res = VertexBSP(I,normal());
   res.normal(v1.normal());
 
 
   return res;
+//  VertexBSP res;
+
+//    Vector3 v1pos = v1.position();
+//    Vector3 v2pos = v2.position();
+
+//    Vector3 a = position(0);
+
+//    // I = v1 + k * v1v2
+//    // k * v1v2 = I - v1
+//    // k = (I-v1) / v1v2
+//    // On prendra partie1 la partie gauche et partie2 la partie droite de la division
+
+//    double partie1 = dot((a-v1pos),normal());
+//    double partie2 = dot(v2pos-v1pos,normal());
+
+//    double k = partie1/partie2;
+
+//    //cout << "K vaut : " << k << endl;
+
+//    Vector3 i = v1pos + k*(v2pos-v1pos);
+
+//    if(-0.05 >= partie2 <= 0.05){
+//        i = (v2pos + v1pos) / 2;
+//    }
+
+//    res.position(i);
+//    res.normal(v1.normal());
+
+
+//    return res;
 }
 
 
@@ -73,34 +105,35 @@ void FaceBSP::separe(const FaceBSP &f,FaceBSP &fPositive,FaceBSP &fNegative) con
   /// - fNegative.add(v) ajoutera le sommet v à fNegative
   /// - lors d'une intersection : il faut ajouter le sommet obtenu à fPositive et fNegative
 
-
   fNegative.clear();
   fPositive.clear();
   ESign signe;
   int cpt =0;
 
   ESign prev_sign=Sign_None;
-  for (int i =0;i < f.size();i++) {
+  for (int i =0;i <= f.size();i++) {
+      int id = i % f.size();
 
-
-      VertexBSP v = f.vertex(i);
+      VertexBSP v = f.vertex(id);
        signe = sign(v.position());
       if(signe != prev_sign && prev_sign != Sign_None) {
-          VertexBSP intersect = intersection(f.vertex(i-1), f.vertex(i));
+          VertexBSP intersect = intersection(f.vertex(i-1), f.vertex(id));
           fNegative.add(intersect);
           fPositive.add(intersect);
 
       }
 
+      if(i < f.size()){
+          if(signe == Sign_Minus){
+              fNegative.add(f.vertex(i));
 
-      if(signe == Sign_Minus){
-          fNegative.add(f.vertex(i));
+          }
+          else {
+              fPositive.add(f.vertex(i));
 
+          }
       }
-      else {
-          fPositive.add(f.vertex(i));
 
-      }
 
 
 
@@ -110,8 +143,8 @@ void FaceBSP::separe(const FaceBSP &f,FaceBSP &fPositive,FaceBSP &fNegative) con
 
   }
 
-   fNegative.add(intersection(f.vertex(f.size()-1), f.vertex(0)));
-   fPositive.add(intersection(f.vertex(f.size()-1), f.vertex(0)));
+//   fNegative.add(intersection(f.vertex(f.size()-1), f.vertex(0)));
+//   fPositive.add(intersection(f.vertex(f.size()-1), f.vertex(0)));
 
 
 

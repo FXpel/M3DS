@@ -40,8 +40,8 @@ GLApplication::GLApplication() {
   bsp2_.read("deux_face.obj");
 
 
-  bsp3_.read("simple_nontri.obj");
-//  bsp3_.read("wolf.obj");
+  //bsp3_.read("simple_nontri.obj");
+  bsp3_.read("wolf.obj");
 }
 
 /// dtor
