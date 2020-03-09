@@ -80,38 +80,44 @@ void FaceBSP::separe(const FaceBSP &f,FaceBSP &fPositive,FaceBSP &fNegative) con
   int cpt =0;
 
   ESign prev_sign=Sign_None;
-  for (int i =0;i < vertex_.size();i++) {
+  for (int i =0;i < f.size();i++) {
+
 
       VertexBSP v = f.vertex(i);
-       signe = f.sign(v.position());
-        cout << signe << endl;
-      if(signe != prev_sign ) {
-          VertexBSP intersect = f.intersection(f.vertex(i-1), v);
+       signe = sign(v.position());
+      if(signe != prev_sign && prev_sign != Sign_None) {
+          VertexBSP intersect = intersection(f.vertex(i-1), f.vertex(i));
           fNegative.add(intersect);
           fPositive.add(intersect);
 
       }
 
-      if(i != f.size()) {
-          if(signe == Sign_Minus){
-              fNegative.add(f.vertex(i));
 
-          }
-          else {
-              fPositive.add(f.vertex(i));
+      if(signe == Sign_Minus){
+          fNegative.add(f.vertex(i));
 
-          }
+      }
+      else {
+          fPositive.add(f.vertex(i));
+
+      }
 
 
-  }
+
   prev_sign = signe;
 
 
 
   }
+
+   fNegative.add(intersection(f.vertex(f.size()-1), f.vertex(0)));
+   fPositive.add(intersection(f.vertex(f.size()-1), f.vertex(0)));
+
+
+
   /** affecte la normale de f aux 2 nouvelles faces **/
-//  fPositive.normal(f.normal());
-//  fNegative.normal(f.normal());
+  fPositive.normal(f.normal());
+  fNegative.normal(f.normal());
 
 }
 
