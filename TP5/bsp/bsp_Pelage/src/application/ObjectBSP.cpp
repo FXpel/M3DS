@@ -47,17 +47,13 @@ NodeBSP *ObjectBSP::consTree(const std::vector<FaceBSP> &face) {
     FaceBSP pivot = face[0];
     res -> face(pivot);
     for (int i = 1;i<face.size();i++) {
-        NodeBSP *f = new NodeBSP();
-        FaceBSP fc = face[i];
 
-        face[i].separe(pivot,fPositive,fNegative);
 
-        if(f -> negative() != NULL){
-            negative.push_back(fc);
-        }
-        if(f -> positive() != NULL){
-            positive.push_back(fc);
-        }
+        pivot.separe(face[i],fPositive,fNegative);
+
+        negative.push_back(fNegative);
+        positive.push_back(fPositive);
+
     }
     // à laisser à la fin : appels récursifs
     res->negative(consTree(negative));
