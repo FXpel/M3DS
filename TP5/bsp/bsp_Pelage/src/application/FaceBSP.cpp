@@ -25,7 +25,7 @@ ESign FaceBSP::sign(const Vector3 &p) const {
 
   ESign res=Sign_None;
   Vector3 p2 = vertex_[0].position_;
-  Vector3 P1P2 = p2 - p;
+  Vector3 P1P2 = p - p2;
 
   double prodScalaire = dot(P1P2,normal_);
 
@@ -51,48 +51,20 @@ VertexBSP FaceBSP::intersection(const VertexBSP &v1,const VertexBSP &v2) const {
   /// - dot(u1,u2) : produit scalaire
 
   VertexBSP res;
-  Vector3 V1V2 = v1.position() - v2.position();
+  Vector3 V1V2 = v2.position() - v1.position();
   Vector3 A = position(0);
-  double k = (dot(A,normal()) - dot(v1.position(),normal()))/ dot(V1V2,normal());
+  float k = dot(A-v1.position(),normal())/ dot(V1V2,normal());
   Vector3 I =v1.position()+k*V1V2;
   if(0.01>=dot(V1V2,normal()) <= -0.01){
       I = v1.position();
+
   }
-  res = VertexBSP(I,normal());
+  res.position(I);
   res.normal(v1.normal());
 
 
   return res;
-//  VertexBSP res;
 
-//    Vector3 v1pos = v1.position();
-//    Vector3 v2pos = v2.position();
-
-//    Vector3 a = position(0);
-
-//    // I = v1 + k * v1v2
-//    // k * v1v2 = I - v1
-//    // k = (I-v1) / v1v2
-//    // On prendra partie1 la partie gauche et partie2 la partie droite de la division
-
-//    double partie1 = dot((a-v1pos),normal());
-//    double partie2 = dot(v2pos-v1pos,normal());
-
-//    double k = partie1/partie2;
-
-//    //cout << "K vaut : " << k << endl;
-
-//    Vector3 i = v1pos + k*(v2pos-v1pos);
-
-//    if(-0.05 >= partie2 <= 0.05){
-//        i = (v2pos + v1pos) / 2;
-//    }
-
-//    res.position(i);
-//    res.normal(v1.normal());
-
-
-//    return res;
 }
 
 

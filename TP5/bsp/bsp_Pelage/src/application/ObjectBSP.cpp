@@ -51,14 +51,15 @@ NodeBSP *ObjectBSP::consTree(const std::vector<FaceBSP> &face) {
 
         pivot.separe(face[i],fPositive,fNegative);
 
+            if(fNegative.size() >0){
+                negative.push_back(fNegative);
 
-        if(fNegative.size() != 0){
-            negative.push_back(fNegative);
-        }
+            }
+            if(fPositive.size() >0){
+                positive.push_back(fPositive);
 
-        if(fPositive.size() != 0){
-            positive.push_back(fPositive);
-        }
+            }
+
 
 
 
